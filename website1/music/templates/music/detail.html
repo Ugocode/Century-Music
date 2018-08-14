@@ -1,0 +1,67 @@
+{% extends 'music/base.html' %}
+
+{% block title %}Album Details{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+      <div class="col-md-4 col-md-3">
+        <div class="panel panel-default">
+              <div class="panel-body">
+                    <a href="{% url 'music:detail' album.id %}" >
+                        <img src="{{ album.album_logo.url }}" class="img-responsive">
+                    </a>
+
+                    <h1 style="color: red">{{album.album_title}}</h1>
+                      <small>{{ album.genre }}</small>
+
+                      <h3 style="color:maroon">{{ album.artist }}</h3>
+
+                </div>
+            </div>
+        </div>
+                <div class ="col-sm-8">
+              <ul class ="nav nav-pills">
+                <li class="active"><a href="{% url 'music:detail' album.id %}">View All</a></li>
+                  <li><a href="{% url 'music:song-add' %}">Add New Song</a></li>
+
+                  <div class="panel panel-default">
+                      <div class="panel-body">
+
+                        <h3>All Songs</h3>
+                          <table class= "table">
+                          <thread>
+                              <tr>
+                                  <th>Title</th>
+                                  <th>Audio File</th>
+                                  <th>Favourite</th>
+                                  <th>Actions</th>
+                              </tr>
+                          </thread>
+                        </table>
+                      </div>
+                  </div>
+              </ul>
+          </div>
+
+      </div><!--end of row-->
+
+
+
+  {% if error_message %}
+      <p><strong>{{ error_message }} </strong></p>
+  {% endif %}
+
+        {% csrf_token %}
+        {% for song in album.song_set.all %}
+            <input type ="radio" id= "song{{ forloop.counter }}" name = "song" value = "{{ song.id }}" />
+            <label for="song{{ forloop.counter }}">
+              {{ song.song_title }}
+              {% if song.is_favorite %}
+                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAABmJLR0QAAAAAAAD5Q7t/AAAAB3RJTUUH4AwHARsAKkPFNwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxNi0xMi0wN1QwMToyNzowMCswMDowMIOEu7AAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTYtMTItMDdUMDE6Mjc6MDArMDA6MDDy2QMMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4ZJREFUOE99lF1oHFUUx38zs5t2P7LZVGMtsZSmhoJSaE2KhIL1A18EQYq++CAUKkUQRSso6EMexD74We2DUC36IAVFESr6IKVSrG1iK1sQN/gRTLK7aZJNskl2Z3dmZ+Z67sw0dan1D3dm7j3/87/3nHPPGErATaCUT7tt0dUFgacwrADDsGLrjTDj901gkeyyKRcepZUwMGQeBEFsuxH/K+bLMDiJN/4N5VI4QUJBieB/xbMupqO9NmQWrrlNefjvkcrBytmDkbhpdnAjfoRQTMnJ9fH1umRGVozQ0V/5UBhzGJv7CAqnqNYrYpJwJW+GGfFCvyASjMTkaVkWphA0xxfxli0irWPCHxHWAL7jMPfD27iI0QxwnaYIRX5KNtBI6Ie98DsLxQKBSrAxPU8qUyPJGInUtFgPSp6+py2Ozb8+oXz+T5Szhd7BEXq33oO7uoZn7CDdvTkSa6yWuXLqGVhtc/sOg+27HVK3OAQZMW4/TGv1J6pFGD6wRLZnjk13jVCfm+fHo4ep2rDn0Em2iZhOoHLbriqeG1WX30dVzqJaEzLOo6aPobymr34+OqhaK49rqvLbX6qvnntIvbTBVEf6UGe+PqFcPwhtoZiG4ys1U3xdrVyRpWWUb6MaM6jCC/Ke/FT9+kVBvdWPel72f9FAvTGcU5cunJbcywaeOAs6OqAhR14uv0NWvYrVbKHyD5LbdobZsb1MfHaJpRosLEhx3H72v3acPQ88FvppgbC218UCqaLJYnkCt/Q0m/LDJAffZWlsiMWZBFv2PsVq8VmmL2/E2jnK7ideJi2dpaT0+u5ptfVLqz91hdOJOTKpAYze+2hMjUrSfqExOU7xdIXZySF82yeTWMZv1kMvwxKn6Gb8W0zO5rfxPZtkbpfsOEmrdAJP3zknT+nccWynn8DMsVa6gF2bivskVhJ0iKnAx7Tycnk9mqWPqV2tML/yMPn9b5LI3cb0xXEaawk5bQ2/tRh7Xce6WJhEHadXoTbzHaWShd3zCvm7P+DO+w9x75GP6N93gIabpzo1T/3qHxKJFznH6Kim21xm9rfPqVb/JnfHI/RtHSKbTZOIt7TXlqkULzJd+JZbB3axc9+TbEhlI6OgQ6zddqivSf2Taboz3WGfmvovoCnSgxr6s96QFvIcspkekslkuK7RIXYN4o7h+3HJRVEz4jxruk6H9or7Owb8A0jk3dyHfbALAAAAAElFTkSuQmCC" alt="" />
+              {% endif %}
+            </label><br>
+        {% endfor %}
+
+
+{% endblock %}
