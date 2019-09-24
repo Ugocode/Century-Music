@@ -7,4 +7,4 @@ This site contains individual artist albums and their play list.
 
 You can clone it and use the code or read the code if you want.
 
-It is made with ## Django 
+It is made with Python Django, HTML and CSS 
